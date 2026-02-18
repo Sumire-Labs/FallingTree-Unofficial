@@ -1,3 +1,13 @@
+## [1.12.2-3.2.0]
+* Add 4 new break modes backported from 1.21.11: FALL_ITEM, FALL_ITEM_STRAIGHT, FALL_BLOCK, FALL_ALL_BLOCK
+  - FALL_ITEM: Logs drop as items with a falling block animation (random spread)
+  - FALL_ITEM_STRAIGHT: Same as FALL_ITEM but blocks fall straight down
+  - FALL_BLOCK: Logs fall as blocks and drop items on landing; leaves drop as items
+  - FALL_ALL_BLOCK: Both logs and leaves fall as blocks (leaves don't drop items)
+* All FALL modes respect DurabilityMode, minSize, maxSize, and MaxSizeAction settings
+* Speed multiplier now applies to FALL modes as well
+* Updated config comments and lang files (en_us, ja_jp, fr_fr) with new mode descriptions
+
 ## [1.12.2-2.4.0] - 2020-09-24
 Port back features
 
