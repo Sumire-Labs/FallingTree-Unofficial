@@ -4,6 +4,7 @@ import fr.raksrinana.fallingtree.config.CommonConfig;
 import fr.raksrinana.fallingtree.config.ToolConfiguration;
 import fr.raksrinana.fallingtree.config.TreeConfiguration;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -64,7 +65,16 @@ public class TreeHandler{
 	private static long getLeavesAround(@Nonnull World world, @Nonnull BlockPos blockPos){
 		return Arrays.stream(EnumFacing.values())
 				.map(blockPos::offset)
-				.filter(testPos -> isLeafBlock(world.getBlockState(testPos).getBlock()))
+				.filter(testPos -> {
+					IBlockState state = world.getBlockState(testPos);
+					if(!isLeafBlock(state.getBlock())){
+						return false;
+					}
+					if(state.getBlock() instanceof BlockLeaves){
+						return state.getValue(BlockLeaves.DECAYABLE);
+					}
+					return true;
+				})
 				.count();
 	}
 	
