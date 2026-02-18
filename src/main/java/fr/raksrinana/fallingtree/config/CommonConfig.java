@@ -9,9 +9,11 @@ import net.minecraftforge.common.config.Config.Name;
 public class CommonConfig{
 	@Name("reverse_sneaking")
 	@Comment("When set to true, a tree will only be chopped down if the player is sneaking.")
+	@Config.LangKey("falling_tree.config.reverse_sneaking")
 	public static boolean reverseSneaking = false;
 	@Name("break_in_creative")
 	@Comment("When set to true, the mod will cut down trees in creative too.")
+	@Config.LangKey("falling_tree.config.break_in_creative")
 	public static boolean breakInCreative = false;
 	
 	public static boolean isReverseSneaking(){

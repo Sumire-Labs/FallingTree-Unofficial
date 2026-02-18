@@ -13,23 +13,27 @@ public class ToolConfiguration{
 			"Additional list of tools that can be used to chop down a tree.",
 			"INFO: Items marked with the axe tag will already be whitelisted."
 	})
+	@Config.LangKey("falling_tree.config.tools.whitelisted")
 	public static String[] whitelisted = {};
 	@Config.Name("blacklisted")
 	@Config.Comment({
 			"List of tools that should not be considered as tools.",
 			"INFO: This wins over the whitelist."
 	})
+	@Config.LangKey("falling_tree.config.tools.blacklisted")
 	public static String[] blacklisted = {};
 	@Config.Name("preserve")
 	@Config.Comment({
 			"When set to true, when a tree is broken and the tool is about to break we will just break enough blocks so that the tool is left at 1 of durability."
 	})
+	@Config.LangKey("falling_tree.config.tools.preserve")
 	public static boolean preserve = false;
 	@Config.Name("ignore_tools")
 	@Config.Comment({
 			"When set to true, the mod will be activated no matter what you have in your hand (or empty hand).",
 			"INFO: Blacklist still can be use to restrict some tools."
 	})
+	@Config.LangKey("falling_tree.config.tools.ignore_tools")
 	public static boolean ignoreTools = false;
 	@Config.Name("damage_multiplicand")
 	@Config.Comment({
@@ -40,6 +44,7 @@ public class ToolConfiguration{
 			"INFO: This only applies when the tree is cut when using the mod."
 	})
 	@Config.RangeInt(min = 0)
+	@Config.LangKey("falling_tree.config.tools.damage_multiplicand")
 	public static int damageMultiplicand = 1;
 	@Config.Name("speed_multiplicand")
 	@Config.Comment({
@@ -51,28 +56,29 @@ public class ToolConfiguration{
 			"WARNING: If you are on a server, this either has to be set to 0 or every player should have the mod. Else they'll have a weird effect of breaking the block but the block is still there."
 	})
 	@Config.RangeDouble(min = 0, max = 50)
+	@Config.LangKey("falling_tree.config.tools.speed_multiplicand")
 	public static double speedMultiplicand = 0;
-	
+
 	public static Collection<Item> getBlacklisted(){
 		return getAsItems(blacklisted);
 	}
-	
+
 	public static Collection<Item> getWhitelisted(){
 		return getAsItems(whitelisted);
 	}
-	
+
 	public static boolean isPreserve(){
 		return preserve;
 	}
-	
+
 	public static int getDamageMultiplicand(){
 		return damageMultiplicand;
 	}
-	
+
 	public static boolean isIgnoreTools(){
 		return ignoreTools;
 	}
-	
+
 	public static double getSpeedMultiplicand(){
 		return speedMultiplicand;
 	}

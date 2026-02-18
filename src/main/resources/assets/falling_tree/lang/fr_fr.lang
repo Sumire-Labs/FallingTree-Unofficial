@@ -1,0 +1,51 @@
+# Messages du chat
+chat.falling_tree.tree_too_big=Cet arbre est trop grand et ne peut être coupé en un coup (taille: %d, max: %d)
+chat.falling_tree.prevented_break_tool=Ton outil est sur le point de casser, va le réparer ou fais en un nouveau
+
+# Config - Général
+falling_tree.config.reverse_sneaking=Inverser l'accroupissement
+falling_tree.config.reverse_sneaking.tooltip=Si activé, l'arbre ne sera abattu que si le joueur est accroupi.
+falling_tree.config.break_in_creative=Actif en créatif
+falling_tree.config.break_in_creative.tooltip=Si activé, le mod abattra les arbres en mode créatif aussi.
+
+# Config - Arbres
+falling_tree.config.trees=Arbres
+falling_tree.config.trees.tooltip=Paramètres liés à la détection et la coupe des arbres.
+falling_tree.config.trees.logs_whitelisted=Bûches autorisées
+falling_tree.config.trees.logs_whitelisted.tooltip=Blocs supplémentaires considérés comme des bûches. Les blocs avec le tag bûche sont déjà autorisés.
+falling_tree.config.trees.logs_blacklisted=Bûches interdites
+falling_tree.config.trees.logs_blacklisted.tooltip=Blocs qui ne doivent pas être considérés comme des bûches. Prioritaire sur la liste blanche.
+falling_tree.config.trees.leaves_whitelisted=Feuilles autorisées
+falling_tree.config.trees.leaves_whitelisted.tooltip=Blocs supplémentaires considérés comme des feuilles. Les blocs avec le tag feuille sont déjà autorisés.
+falling_tree.config.trees.leaves_blacklisted=Feuilles interdites
+falling_tree.config.trees.leaves_blacklisted.tooltip=Blocs qui ne doivent pas être considérés comme des feuilles. Prioritaire sur la liste blanche.
+falling_tree.config.trees.break_mode=Mode de coupe
+falling_tree.config.trees.break_mode.tooltip=Comment abattre l'arbre. INSTANTANEOUS le coupe d'un coup. SHIFT_DOWN fait tomber les bûches au fur et à mesure.
+falling_tree.config.trees.logs_max_count=Nombre max de bûches
+falling_tree.config.trees.logs_max_count.tooltip=Taille maximale d'un arbre. Les arbres plus grands ne seront pas coupés. Mode INSTANTANEOUS uniquement.
+falling_tree.config.trees.minimum_leaves_around_required=Min feuilles autour du sommet
+falling_tree.config.trees.minimum_leaves_around_required.tooltip=Nombre minimum de feuilles adjacentes à la bûche la plus haute pour considérer la structure comme un arbre. Mode INSTANTANEOUS uniquement.
+falling_tree.config.trees.minimum_leaves_ratio=Ratio min de feuilles
+falling_tree.config.trees.minimum_leaves_ratio.tooltip=Ratio minimum de feuilles adjacentes par rapport aux bûches. Ex: 0.5 = au moins la moitié. 0 pour désactiver. Vérifie toutes les bûches.
+falling_tree.config.trees.leaves_breaking=Casser les feuilles
+falling_tree.config.trees.leaves_breaking.tooltip=Si activé, les feuilles qui devraient se casser naturellement seront cassées instantanément.
+falling_tree.config.trees.leaves_breaking_force_radius=Rayon de cassage forcé des feuilles
+falling_tree.config.trees.leaves_breaking_force_radius.tooltip=Rayon pour forcer la casse des feuilles depuis la bûche la plus haute. Les feuilles placées par le joueur seront aussi détruites. Nécessite l'activation de Casser les feuilles. Mode INSTANTANEOUS uniquement.
+falling_tree.config.trees.allow_mixed_logs=Autoriser les bûches mixtes
+falling_tree.config.trees.allow_mixed_logs.tooltip=Si activé, différents types de bûches peuvent faire partie d'un même tronc.
+
+# Config - Outils
+falling_tree.config.tools=Outils
+falling_tree.config.tools.tooltip=Paramètres liés au comportement des outils.
+falling_tree.config.tools.whitelisted=Outils autorisés
+falling_tree.config.tools.whitelisted.tooltip=Outils supplémentaires pouvant abattre un arbre. Les items avec le tag hache sont déjà autorisés.
+falling_tree.config.tools.blacklisted=Outils interdits
+falling_tree.config.tools.blacklisted.tooltip=Outils qui ne peuvent pas être utilisés avec ce mod. Prioritaire sur la liste blanche.
+falling_tree.config.tools.preserve=Préserver l'outil
+falling_tree.config.tools.preserve.tooltip=Si activé, l'outil s'arrêtera à 1 de durabilité au lieu de se casser.
+falling_tree.config.tools.ignore_tools=Ignorer les outils
+falling_tree.config.tools.ignore_tools.tooltip=Si activé, le mod fonctionne peu importe ce que vous tenez (ou main vide). La liste noire reste active.
+falling_tree.config.tools.damage_multiplicand=Multiplicateur de dégâts
+falling_tree.config.tools.damage_multiplicand.tooltip=Nombre de fois que les dégâts sont appliqués par bûche. 1 = 5 bûches donnent 5 dégâts. 0 = toujours 1 dégât par coupe.
+falling_tree.config.tools.speed_multiplicand=Multiplicateur de vitesse
+falling_tree.config.tools.speed_multiplicand.tooltip=Modificateur de vitesse de coupe. 0 = vitesse par défaut. 1 = chaque bûche comptée une fois. Mode INSTANTANEOUS uniquement. Sur serveur, mettre à 0 ou s'assurer que tous les joueurs ont le mod.
