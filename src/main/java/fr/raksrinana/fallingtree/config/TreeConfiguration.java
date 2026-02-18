@@ -62,14 +62,14 @@ public class TreeConfiguration{
 	public static int minimumLeavesAroundRequired = 0;
 	@Config.Name("minimum_leaves_ratio")
 	@Config.Comment({
-			"The minimum ratio of adjacent leaves to logs required for the mod to consider a structure as a tree.",
-			"For example, 0.5 means at least half as many adjacent leaf blocks as log blocks are needed.",
+			"The minimum ratio of logs that have at least one adjacent leaf block.",
+			"For example, 0.1 means at least 10% of logs must touch a leaf.",
 			"Set to 0 to disable this check.",
 			"This checks all logs in the tree, not just the top."
 	})
-	@Config.RangeDouble(min = 0.0, max = 10.0)
+	@Config.RangeDouble(min = 0.0, max = 1.0)
 	@Config.LangKey("falling_tree.config.trees.minimum_leaves_ratio")
-	public static double minimumLeavesRatio = 0.5;
+	public static double minimumLeavesRatio = 0.1;
 	@Config.Name("leaves_breaking")
 	@Config.Comment({
 			"When set to true, leaves that should naturally break will be broken instantly."

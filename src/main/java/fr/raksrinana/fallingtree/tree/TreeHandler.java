@@ -50,10 +50,10 @@ public class TreeHandler{
 
 		double requiredRatio = TreeConfiguration.getMinimumLeavesRatio();
 		if(requiredRatio > 0){
-			long totalAdjacentLeaves = tree.getLogs().stream()
-					.mapToLong(log -> getLeavesAround(world, log))
-					.sum();
-			if(totalAdjacentLeaves < tree.getLogCount() * requiredRatio){
+			long logsWithLeaves = tree.getLogs().stream()
+					.filter(log -> getLeavesAround(world, log) > 0)
+					.count();
+			if(logsWithLeaves < tree.getLogCount() * requiredRatio){
 				return Optional.empty();
 			}
 		}
