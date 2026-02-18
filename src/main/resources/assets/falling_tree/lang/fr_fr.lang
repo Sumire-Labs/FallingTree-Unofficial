@@ -1,10 +1,13 @@
 # Messages du chat
 chat.falling_tree.tree_too_big=Cet arbre est trop grand et ne peut être coupé en un coup (taille: %d, max: %d)
 chat.falling_tree.prevented_break_tool=Ton outil est sur le point de casser, va le réparer ou fais en un nouveau
+chat.falling_tree.tree_too_small=Cet arbre est trop petit pour être abattu (taille: %d, min: %d)
 
 # Config - Général
-falling_tree.config.reverse_sneaking=Inverser l'accroupissement
-falling_tree.config.reverse_sneaking.tooltip=Si activé, l'arbre ne sera abattu que si le joueur est accroupi.
+falling_tree.config.sneak_mode=Mode d'accroupissement
+falling_tree.config.sneak_mode.tooltip=Comment l'accroupissement affecte l'abattage. SNEAK_DISABLE: seulement sans s'accroupir. SNEAK_ENABLE: seulement en s'accroupissant. IGNORE: toujours actif.
+falling_tree.config.notification_mode=Mode de notification
+falling_tree.config.notification_mode.tooltip=Comment afficher les notifications. CHAT: message de chat. ACTION_BAR: barre d'action. NONE: pas de notifications.
 falling_tree.config.break_in_creative=Actif en créatif
 falling_tree.config.break_in_creative.tooltip=Si activé, le mod abattra les arbres en mode créatif aussi.
 
@@ -33,6 +36,12 @@ falling_tree.config.trees.leaves_breaking_force_radius=Rayon de cassage forcé d
 falling_tree.config.trees.leaves_breaking_force_radius.tooltip=Rayon pour forcer la casse des feuilles depuis la bûche la plus haute. Les feuilles placées par le joueur seront aussi détruites. Nécessite l'activation de Casser les feuilles. Mode INSTANTANEOUS uniquement.
 falling_tree.config.trees.allow_mixed_logs=Autoriser les bûches mixtes
 falling_tree.config.trees.allow_mixed_logs.tooltip=Si activé, différents types de bûches peuvent faire partie d'un même tronc.
+falling_tree.config.trees.max_scan_size=Taille max de scan
+falling_tree.config.trees.max_scan_size.tooltip=Nombre maximum de blocs à scanner lors de la détection d'un arbre. Les structures dépassant cette limite ne seront pas considérées comme des arbres.
+falling_tree.config.trees.min_size=Taille min de l'arbre
+falling_tree.config.trees.min_size.tooltip=Nombre minimum de bûches pour qu'un arbre soit abattu. Les arbres plus petits sont cassés normalement. 0 pour désactiver.
+falling_tree.config.trees.max_size_action=Action taille max
+falling_tree.config.trees.max_size_action.tooltip=Que faire quand un arbre dépasse la taille max. ABORT: annuler l'abattage. CUT: abattre jusqu'à la taille max.
 
 # Config - Outils
 falling_tree.config.tools=Outils
@@ -41,8 +50,8 @@ falling_tree.config.tools.whitelisted=Outils autorisés
 falling_tree.config.tools.whitelisted.tooltip=Outils supplémentaires pouvant abattre un arbre. Les items avec le tag hache sont déjà autorisés.
 falling_tree.config.tools.blacklisted=Outils interdits
 falling_tree.config.tools.blacklisted.tooltip=Outils qui ne peuvent pas être utilisés avec ce mod. Prioritaire sur la liste blanche.
-falling_tree.config.tools.preserve=Préserver l'outil
-falling_tree.config.tools.preserve.tooltip=Si activé, l'outil s'arrêtera à 1 de durabilité au lieu de se casser.
+falling_tree.config.tools.durability_mode=Mode de durabilité
+falling_tree.config.tools.durability_mode.tooltip=Comment gérer la durabilité de l'outil. ABORT: annuler si insuffisant. SAVE: laisser à 1 de durabilité. NORMAL: abattre tant que la durabilité le permet. BYPASS: ignorer la durabilité.
 falling_tree.config.tools.ignore_tools=Ignorer les outils
 falling_tree.config.tools.ignore_tools.tooltip=Si activé, le mod fonctionne peu importe ce que vous tenez (ou main vide). La liste noire reste active.
 falling_tree.config.tools.damage_multiplicand=Multiplicateur de dégâts

@@ -2,6 +2,7 @@ package fr.raksrinana.fallingtree;
 
 import fr.raksrinana.fallingtree.config.BreakMode;
 import fr.raksrinana.fallingtree.config.CommonConfig;
+import fr.raksrinana.fallingtree.config.MaxSizeAction;
 import fr.raksrinana.fallingtree.config.ToolConfiguration;
 import fr.raksrinana.fallingtree.config.TreeConfiguration;
 import fr.raksrinana.fallingtree.tree.Tree;
@@ -79,13 +80,21 @@ public final class ForgeEventSubscriber{
 	}
 	
 	private static void breakInstant(BlockEvent.BreakEvent event, Tree tree){
+		if(tree.getLogCount() < TreeConfiguration.getMinSize()){
+			return;
+		}
 		if(TreeConfiguration.getMaxSize() >= tree.getLogCount()){
 			if(!TreeHandler.destroyInstant(tree, event.getPlayer(), event.getPlayer().getHeldItem(EnumHand.MAIN_HAND))){
 				event.setCanceled(true);
 			}
 		}
+		else if(TreeConfiguration.getMaxSizeAction() == MaxSizeAction.CUT){
+			if(!TreeHandler.destroyInstant(tree, event.getPlayer(), event.getPlayer().getHeldItem(EnumHand.MAIN_HAND), TreeConfiguration.getMaxSize())){
+				event.setCanceled(true);
+			}
+		}
 		else{
-			event.getPlayer().sendMessage(new TextComponentTranslation("chat.falling_tree.tree_too_big", tree.getLogCount(), TreeConfiguration.getMaxSize()));
+			notifyPlayer(event.getPlayer(), new TextComponentTranslation("chat.falling_tree.tree_too_big", tree.getLogCount(), TreeConfiguration.getMaxSize()));
 		}
 	}
 	
@@ -98,10 +107,23 @@ public final class ForgeEventSubscriber{
 		if(player.capabilities.isCreativeMode && !CommonConfig.isBreakInCreative()){
 			return false;
 		}
-		if(CommonConfig.isReverseSneaking() != player.isSneaking()){
+		if(!CommonConfig.getSneakMode().test(player.isSneaking())){
 			return false;
 		}
 		return canPlayerBreakTree(player);
+	}
+
+	private static void notifyPlayer(EntityPlayer player, TextComponentTranslation message){
+		switch(CommonConfig.getNotificationMode()){
+			case CHAT:
+				player.sendMessage(message);
+				break;
+			case ACTION_BAR:
+				player.sendStatusMessage(message, true);
+				break;
+			case NONE:
+				break;
+		}
 	}
 	
 	@SubscribeEvent

@@ -22,12 +22,16 @@ public class ToolConfiguration{
 	})
 	@Config.LangKey("falling_tree.config.tools.blacklisted")
 	public static String[] blacklisted = {};
-	@Config.Name("preserve")
+	@Config.Name("durability_mode")
 	@Config.Comment({
-			"When set to true, when a tree is broken and the tool is about to break we will just break enough blocks so that the tool is left at 1 of durability."
+			"How to handle tool durability when felling trees.",
+			"ABORT: Cancel felling if durability is insufficient.",
+			"SAVE: Leave the tool at 1 durability and fell as many logs as possible.",
+			"NORMAL: Fell logs until durability runs out (default).",
+			"BYPASS: Ignore durability entirely (tool may break)."
 	})
-	@Config.LangKey("falling_tree.config.tools.preserve")
-	public static boolean preserve = false;
+	@Config.LangKey("falling_tree.config.tools.durability_mode")
+	public static DurabilityMode durabilityMode = DurabilityMode.NORMAL;
 	@Config.Name("ignore_tools")
 	@Config.Comment({
 			"When set to true, the mod will be activated no matter what you have in your hand (or empty hand).",
@@ -67,8 +71,8 @@ public class ToolConfiguration{
 		return getAsItems(whitelisted);
 	}
 
-	public static boolean isPreserve(){
-		return preserve;
+	public static DurabilityMode getDurabilityMode(){
+		return durabilityMode;
 	}
 
 	public static int getDamageMultiplicand(){

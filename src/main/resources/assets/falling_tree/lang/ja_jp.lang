@@ -1,10 +1,13 @@
 # チャットメッセージ
 chat.falling_tree.tree_too_big=この木は大きすぎて一度に伐採できません (サイズ: %d, 上限: %d)
 chat.falling_tree.prevented_break_tool=ツールが壊れそうです。修理するか新しいものを用意してください
+chat.falling_tree.tree_too_small=この木は小さすぎて一括伐採できません (サイズ: %d, 最小: %d)
 
 # コンフィグ - 一般
-falling_tree.config.reverse_sneaking=スニーク反転
-falling_tree.config.reverse_sneaking.tooltip=有効にすると、スニーク中のみ木を一括伐採します。
+falling_tree.config.sneak_mode=スニークモード
+falling_tree.config.sneak_mode.tooltip=スニークと伐採の関係。SNEAK_DISABLE: スニークしていない時のみ伐採。SNEAK_ENABLE: スニーク中のみ伐採。IGNORE: 常に有効。
+falling_tree.config.notification_mode=通知モード
+falling_tree.config.notification_mode.tooltip=通知の表示方法。CHAT: チャットメッセージ。ACTION_BAR: アクションバー。NONE: 通知なし。
 falling_tree.config.break_in_creative=クリエイティブで有効
 falling_tree.config.break_in_creative.tooltip=有効にすると、クリエイティブモードでも一括伐採が動作します。
 
@@ -33,6 +36,12 @@ falling_tree.config.trees.leaves_breaking_force_radius=葉の強制破壊半径
 falling_tree.config.trees.leaves_breaking_force_radius.tooltip=最上部の原木からこの半径内の葉を強制破壊します。プレイヤー設置の葉も破壊されます。「葉の自動破壊」が有効な場合のみ動作。INSTANTANEOUSモード限定。
 falling_tree.config.trees.allow_mixed_logs=混合原木を許可
 falling_tree.config.trees.allow_mixed_logs.tooltip=有効にすると、異なる種類の原木が混在する幹も一本の木として扱います。
+falling_tree.config.trees.max_scan_size=最大スキャンサイズ
+falling_tree.config.trees.max_scan_size.tooltip=木を検出する際にスキャンするブロックの最大数。この上限を超える構造物は木として扱われません。
+falling_tree.config.trees.min_size=最小木サイズ
+falling_tree.config.trees.min_size.tooltip=一括伐採に必要な最小原木数。これ未満の木は通常通り破壊されます。0で無効。
+falling_tree.config.trees.max_size_action=最大サイズ超過時の動作
+falling_tree.config.trees.max_size_action.tooltip=木が最大サイズを超えた場合の動作。ABORT: 伐採を中止。CUT: 最大サイズまで伐採。
 
 # コンフィグ - ツール
 falling_tree.config.tools=ツール設定
@@ -41,8 +50,8 @@ falling_tree.config.tools.whitelisted=ツールホワイトリスト
 falling_tree.config.tools.whitelisted.tooltip=伐採に使える追加ツール。斧タグが付いたアイテムは自動的にホワイトリストに入ります。
 falling_tree.config.tools.blacklisted=ツールブラックリスト
 falling_tree.config.tools.blacklisted.tooltip=一括伐採に使えないツール。ホワイトリストより優先されます。
-falling_tree.config.tools.preserve=ツール保護
-falling_tree.config.tools.preserve.tooltip=有効にすると、ツールが壊れそうな場合は耐久値1を残して伐採を止めます。
+falling_tree.config.tools.durability_mode=耐久値モード
+falling_tree.config.tools.durability_mode.tooltip=耐久値の扱い方。ABORT: 耐久不足なら中止。SAVE: 耐久値1を残して伐採。NORMAL: 耐久が続く限り伐採。BYPASS: 耐久無視。
 falling_tree.config.tools.ignore_tools=ツール不問
 falling_tree.config.tools.ignore_tools.tooltip=有効にすると、手に何を持っていても（素手でも）一括伐採が動作します。ブラックリストは引き続き有効です。
 falling_tree.config.tools.damage_multiplicand=ダメージ倍率

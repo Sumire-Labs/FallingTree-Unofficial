@@ -1,10 +1,13 @@
 # Chat messages
 chat.falling_tree.tree_too_big=This tree is too big and can't be broken in one hit (size: %d, max: %d)
 chat.falling_tree.prevented_break_tool=Your tool is about to break, go repair it or get a new one
+chat.falling_tree.tree_too_small=This tree is too small to be felled (size: %d, min: %d)
 
 # Config - General
-falling_tree.config.reverse_sneaking=Reverse Sneaking
-falling_tree.config.reverse_sneaking.tooltip=When enabled, a tree will only be chopped down if the player is sneaking.
+falling_tree.config.sneak_mode=Sneak Mode
+falling_tree.config.sneak_mode.tooltip=How sneaking affects tree felling. SNEAK_DISABLE: only when not sneaking. SNEAK_ENABLE: only when sneaking. IGNORE: always active.
+falling_tree.config.notification_mode=Notification Mode
+falling_tree.config.notification_mode.tooltip=How to display notifications. CHAT: chat message. ACTION_BAR: action bar. NONE: no notifications.
 falling_tree.config.break_in_creative=Break in Creative
 falling_tree.config.break_in_creative.tooltip=When enabled, the mod will cut down trees in creative mode too.
 
@@ -33,6 +36,12 @@ falling_tree.config.trees.leaves_breaking_force_radius=Force Break Leaves Radius
 falling_tree.config.trees.leaves_breaking_force_radius.tooltip=Radius to force break leaves from the topmost log. Even persistent (player-placed) leaves will be destroyed. Requires Break Leaves to be enabled. Only in INSTANTANEOUS mode.
 falling_tree.config.trees.allow_mixed_logs=Allow Mixed Logs
 falling_tree.config.trees.allow_mixed_logs.tooltip=When enabled, any kind of log can be part of a tree trunk. Otherwise only one kind of log is considered.
+falling_tree.config.trees.max_scan_size=Max Scan Size
+falling_tree.config.trees.max_scan_size.tooltip=Maximum number of blocks to scan when detecting a tree. Structures exceeding this limit won't be considered trees.
+falling_tree.config.trees.min_size=Min Tree Size
+falling_tree.config.trees.min_size.tooltip=Minimum number of logs for a tree to be felled. Smaller trees are broken normally. Set to 0 to disable.
+falling_tree.config.trees.max_size_action=Max Size Action
+falling_tree.config.trees.max_size_action.tooltip=What to do when a tree exceeds the max size. ABORT: cancel felling. CUT: fell up to the max size.
 
 # Config - Tools
 falling_tree.config.tools=Tools
@@ -41,8 +50,8 @@ falling_tree.config.tools.whitelisted=Whitelisted Tools
 falling_tree.config.tools.whitelisted.tooltip=Additional tools that can be used to chop down a tree. Items with the axe tag are already whitelisted.
 falling_tree.config.tools.blacklisted=Blacklisted Tools
 falling_tree.config.tools.blacklisted.tooltip=Tools that should not be used with this mod. This wins over the whitelist.
-falling_tree.config.tools.preserve=Preserve Tool
-falling_tree.config.tools.preserve.tooltip=When enabled, if a tool is about to break, only enough blocks will be broken to leave the tool at 1 durability.
+falling_tree.config.tools.durability_mode=Durability Mode
+falling_tree.config.tools.durability_mode.tooltip=How to handle tool durability. ABORT: cancel if insufficient. SAVE: leave at 1 durability. NORMAL: fell until durability runs out. BYPASS: ignore durability.
 falling_tree.config.tools.ignore_tools=Ignore Tools
 falling_tree.config.tools.ignore_tools.tooltip=When enabled, the mod works regardless of what you hold (or empty hand). Blacklist can still restrict specific tools.
 falling_tree.config.tools.damage_multiplicand=Damage Multiplier

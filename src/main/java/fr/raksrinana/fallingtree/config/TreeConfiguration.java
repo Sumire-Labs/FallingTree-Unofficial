@@ -93,6 +93,32 @@ public class TreeConfiguration{
 	})
 	@Config.LangKey("falling_tree.config.trees.allow_mixed_logs")
 	public static boolean allowMixedLogs = false;
+	@Config.Name("max_scan_size")
+	@Config.Comment({
+			"Maximum number of blocks to scan when detecting a tree.",
+			"If the BFS scan exceeds this limit, the structure won't be considered a tree.",
+			"Useful for preventing lag on very large structures."
+	})
+	@Config.RangeInt(min = 1)
+	@Config.LangKey("falling_tree.config.trees.max_scan_size")
+	public static int maxScanSize = 500;
+	@Config.Name("min_size")
+	@Config.Comment({
+			"The minimum number of logs required for a tree to be felled.",
+			"Trees smaller than this will be broken normally.",
+			"Set to 0 to disable."
+	})
+	@Config.RangeInt(min = 0)
+	@Config.LangKey("falling_tree.config.trees.min_size")
+	public static int minSize = 0;
+	@Config.Name("max_size_action")
+	@Config.Comment({
+			"What to do when a tree exceeds the maximum size.",
+			"ABORT: Cancel the tree felling entirely (default).",
+			"CUT: Fell up to the maximum size."
+	})
+	@Config.LangKey("falling_tree.config.trees.max_size_action")
+	public static MaxSizeAction maxSizeAction = MaxSizeAction.ABORT;
 
 	public static Collection<Block> getBlacklistedLeaves(){
 		return getAsBlocks(blacklistedLeaves);
@@ -136,5 +162,17 @@ public class TreeConfiguration{
 
 	public static double getMinimumLeavesRatio(){
 		return minimumLeavesRatio;
+	}
+
+	public static int getMaxScanSize(){
+		return maxScanSize;
+	}
+
+	public static int getMinSize(){
+		return minSize;
+	}
+
+	public static MaxSizeAction getMaxSizeAction(){
+		return maxSizeAction;
 	}
 }
