@@ -47,7 +47,17 @@ public class TreeHandler{
 				return Optional.empty();
 			}
 		}
-		
+
+		double requiredRatio = TreeConfiguration.getMinimumLeavesRatio();
+		if(requiredRatio > 0){
+			long totalAdjacentLeaves = tree.getLogs().stream()
+					.mapToLong(log -> getLeavesAround(world, log))
+					.sum();
+			if(totalAdjacentLeaves < tree.getLogCount() * requiredRatio){
+				return Optional.empty();
+			}
+		}
+
 		return Optional.of(tree);
 	}
 	
