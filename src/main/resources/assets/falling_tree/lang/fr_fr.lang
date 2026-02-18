@@ -26,7 +26,7 @@ falling_tree.config.trees.logs_max_count.tooltip=Taille maximale d'un arbre. Les
 falling_tree.config.trees.minimum_leaves_around_required=Min feuilles autour du sommet
 falling_tree.config.trees.minimum_leaves_around_required.tooltip=Nombre minimum de feuilles adjacentes à la bûche la plus haute pour considérer la structure comme un arbre. Mode INSTANTANEOUS uniquement.
 falling_tree.config.trees.minimum_leaves_ratio=Ratio min de feuilles
-falling_tree.config.trees.minimum_leaves_ratio.tooltip=Ratio minimum de feuilles adjacentes par rapport aux bûches. Ex: 0.5 = au moins la moitié. 0 pour désactiver. Vérifie toutes les bûches.
+falling_tree.config.trees.minimum_leaves_ratio.tooltip=Ratio minimum de feuilles adjacentes par rapport aux bûches. Ex: 0.5 = au moins la moitié. Par défaut 0.5 pour supporter les acacias. 0 pour désactiver. Vérifie toutes les bûches.
 falling_tree.config.trees.leaves_breaking=Casser les feuilles
 falling_tree.config.trees.leaves_breaking.tooltip=Si activé, les feuilles qui devraient se casser naturellement seront cassées instantanément.
 falling_tree.config.trees.leaves_breaking_force_radius=Rayon de cassage forcé des feuilles

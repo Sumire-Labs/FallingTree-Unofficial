@@ -69,7 +69,7 @@ public class TreeConfiguration{
 	})
 	@Config.RangeDouble(min = 0.0, max = 10.0)
 	@Config.LangKey("falling_tree.config.trees.minimum_leaves_ratio")
-	public static double minimumLeavesRatio = 1.0;
+	public static double minimumLeavesRatio = 0.5;
 	@Config.Name("leaves_breaking")
 	@Config.Comment({
 			"When set to true, leaves that should naturally break will be broken instantly."
