@@ -39,8 +39,12 @@ public class TreeConfiguration{
 	@Config.Name("break_mode")
 	@Config.Comment({
 			"How to break the tree.",
-			"Instantaneous will break it in one go.",
-			"Shift down will make the tree fall down as you cut it, so you still have to break x blocks but don't have to climb the tree for them."
+			"INSTANTANEOUS will break it in one go.",
+			"SHIFT_DOWN will make the tree fall down as you cut it, so you still have to break x blocks but don't have to climb the tree for them.",
+			"FALL_ITEM will drop items and spawn falling block animations with random spread.",
+			"FALL_ITEM_STRAIGHT is like FALL_ITEM but blocks fall straight down.",
+			"FALL_BLOCK will make logs fall as blocks (drop on landing) with random spread. Leaves drop as items.",
+			"FALL_ALL_BLOCK will make both logs and leaves fall as blocks with random spread."
 	})
 	@Config.LangKey("falling_tree.config.trees.break_mode")
 	public static BreakMode breakMode = BreakMode.INSTANTANEOUS;

@@ -38,7 +38,7 @@ public final class ForgeEventSubscriber{
 	@SubscribeEvent
 	public static void onBreakSpeed(@Nonnull PlayerEvent.BreakSpeed event){
 		if(!event.isCanceled()){
-			if(TreeConfiguration.getBreakMode() == BreakMode.INSTANTANEOUS){
+			if(shouldApplySpeedMultiplier(TreeConfiguration.getBreakMode())){
 				if(isPlayerInRightState(event.getEntityPlayer())){
 					CachedSpeed cachedSpeed = speedCache.compute(event.getEntityPlayer().getUniqueID(), (pos, speed) -> {
 						if(Objects.isNull(speed) || !speed.isValid(event.getPos())){
@@ -51,6 +51,19 @@ public final class ForgeEventSubscriber{
 					}
 				}
 			}
+		}
+	}
+
+	private static boolean shouldApplySpeedMultiplier(BreakMode breakMode){
+		switch(breakMode){
+			case INSTANTANEOUS:
+			case FALL_ITEM:
+			case FALL_ITEM_STRAIGHT:
+			case FALL_BLOCK:
+			case FALL_ALL_BLOCK:
+				return true;
+			default:
+				return false;
 		}
 	}
 	
@@ -73,6 +86,9 @@ public final class ForgeEventSubscriber{
 					}
 					else if(breakMode == BreakMode.SHIFT_DOWN){
 						breakShiftDown(event, tree);
+					}
+					else{
+						breakFalling(event, tree, breakMode);
 					}
 				});
 			}
@@ -101,6 +117,25 @@ public final class ForgeEventSubscriber{
 	private static void breakShiftDown(BlockEvent.BreakEvent event, Tree tree){
 		TreeHandler.destroyShift(tree, event.getPlayer(), event.getPlayer().getHeldItem(EnumHand.MAIN_HAND));
 		event.setCanceled(true);
+	}
+
+	private static void breakFalling(BlockEvent.BreakEvent event, Tree tree, BreakMode breakMode){
+		if(tree.getLogCount() < TreeConfiguration.getMinSize()){
+			return;
+		}
+		if(TreeConfiguration.getMaxSize() >= tree.getLogCount()){
+			if(!TreeHandler.destroyFalling(tree, event.getPlayer(), event.getPlayer().getHeldItem(EnumHand.MAIN_HAND), breakMode)){
+				event.setCanceled(true);
+			}
+		}
+		else if(TreeConfiguration.getMaxSizeAction() == MaxSizeAction.CUT){
+			if(!TreeHandler.destroyFalling(tree, event.getPlayer(), event.getPlayer().getHeldItem(EnumHand.MAIN_HAND), breakMode, TreeConfiguration.getMaxSize())){
+				event.setCanceled(true);
+			}
+		}
+		else{
+			notifyPlayer(event.getPlayer(), new TextComponentTranslation("chat.falling_tree.tree_too_big", tree.getLogCount(), TreeConfiguration.getMaxSize()));
+		}
 	}
 	
 	private static boolean isPlayerInRightState(EntityPlayer player){

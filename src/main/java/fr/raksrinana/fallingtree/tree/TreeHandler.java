@@ -1,5 +1,6 @@
 package fr.raksrinana.fallingtree.tree;
 
+import fr.raksrinana.fallingtree.config.BreakMode;
 import fr.raksrinana.fallingtree.config.CommonConfig;
 import fr.raksrinana.fallingtree.config.DurabilityMode;
 import fr.raksrinana.fallingtree.config.NotificationMode;
@@ -8,6 +9,7 @@ import fr.raksrinana.fallingtree.config.TreeConfiguration;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -225,5 +227,115 @@ public class TreeHandler{
 			}
 		}
 		return true;
+	}
+
+	public static boolean destroyFalling(@Nonnull Tree tree, @Nonnull EntityPlayer player, @Nonnull ItemStack tool, @Nonnull BreakMode breakMode){
+		return destroyFalling(tree, player, tool, breakMode, tree.getLogCount());
+	}
+
+	public static boolean destroyFalling(@Nonnull Tree tree, @Nonnull EntityPlayer player, @Nonnull ItemStack tool, @Nonnull BreakMode breakMode, int maxLogs){
+		final World world = tree.getWorld();
+		final DurabilityMode durabilityMode = ToolConfiguration.getDurabilityMode();
+		final int damageMultiplicand = ToolConfiguration.getDamageMultiplicand();
+		final int toolUsesLeft = tool.isItemStackDamageable() ? (tool.getMaxDamage() - tool.getItemDamage()) : Integer.MAX_VALUE;
+		double rawWeightedUsesLeft = damageMultiplicand == 0 ? (toolUsesLeft - 1) : ((1d * toolUsesLeft) / damageMultiplicand);
+		int logsToBreak = Math.min(tree.getLogCount(), maxLogs);
+		switch(durabilityMode){
+			case ABORT:
+				if(rawWeightedUsesLeft < logsToBreak){
+					notifyPlayer(player, new TextComponentTranslation("chat.falling_tree.prevented_break_tool"));
+					return false;
+				}
+				break;
+			case SAVE:
+				if(rawWeightedUsesLeft <= 1){
+					notifyPlayer(player, new TextComponentTranslation("chat.falling_tree.prevented_break_tool"));
+					return false;
+				}
+				if(logsToBreak >= rawWeightedUsesLeft){
+					logsToBreak = (int) Math.ceil(rawWeightedUsesLeft) - 1;
+				}
+				break;
+			case BYPASS:
+				logsToBreak = Math.min(tree.getLogCount(), maxLogs);
+				break;
+			case NORMAL:
+			default:
+				if(logsToBreak > rawWeightedUsesLeft){
+					logsToBreak = (int) rawWeightedUsesLeft;
+				}
+				break;
+		}
+		final int finalLogsToBreak = logsToBreak;
+		final boolean isTreeFullyBroken = damageMultiplicand == 0 || finalLogsToBreak >= tree.getLogCount();
+		final boolean dropLogsAsItems = (breakMode == BreakMode.FALL_ITEM || breakMode == BreakMode.FALL_ITEM_STRAIGHT);
+		final boolean isStraight = (breakMode == BreakMode.FALL_ITEM_STRAIGHT);
+		final Random rand = world.rand;
+		tree.getLogs().stream().limit(finalLogsToBreak).forEachOrdered(logBlock -> {
+			final IBlockState logState = world.getBlockState(logBlock);
+			player.addStat(StatList.getObjectBreakStats(Item.getItemFromBlock(logState.getBlock())));
+			if(dropLogsAsItems){
+				logState.getBlock().harvestBlock(world, player, logBlock, logState, world.getTileEntity(logBlock), tool);
+			}
+			EntityFallingBlock entity = new EntityFallingBlock(world, logBlock.getX() + 0.5, logBlock.getY(), logBlock.getZ() + 0.5, logState);
+			entity.shouldDropItem = !dropLogsAsItems;
+			if(isStraight){
+				entity.motionX = 0;
+				entity.motionZ = 0;
+			}
+			else{
+				entity.motionX = (rand.nextDouble() - 0.5) * 0.4;
+				entity.motionZ = (rand.nextDouble() - 0.5) * 0.4;
+			}
+			entity.motionY = 0;
+			world.spawnEntity(entity);
+			world.setBlockToAir(logBlock);
+		});
+		if(durabilityMode != DurabilityMode.BYPASS){
+			int toolDamage = (damageMultiplicand * finalLogsToBreak) - 1;
+			if(toolDamage > 0){
+				tool.damageItem(toolDamage, player);
+			}
+		}
+		if(isTreeFullyBroken){
+			final boolean dropLeavesAsItems = (breakMode != BreakMode.FALL_ALL_BLOCK);
+			final int radius = 5;
+			Set<BlockPos> processedLeaves = new HashSet<>();
+			for(BlockPos logPos : tree.getLogs()){
+				collectAndFallLeaves(world, player, tool, logPos, radius, dropLeavesAsItems, rand, processedLeaves);
+			}
+		}
+		return true;
+	}
+
+	private static void collectAndFallLeaves(@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull ItemStack tool,
+			@Nonnull BlockPos center, int radius, boolean dropAsItems, @Nonnull Random rand, @Nonnull Set<BlockPos> processed){
+		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
+		for(int dx = -radius; dx <= radius; dx++){
+			for(int dy = -radius; dy <= radius; dy++){
+				for(int dz = -radius; dz <= radius; dz++){
+					checkPos.setPos(center.getX() + dx, center.getY() + dy, center.getZ() + dz);
+					if(processed.contains(checkPos)){
+						continue;
+					}
+					final IBlockState checkState = world.getBlockState(checkPos);
+					final Block checkBlock = checkState.getBlock();
+					if(isLeafBlock(checkBlock)){
+						BlockPos immutablePos = checkPos.toImmutable();
+						processed.add(immutablePos);
+						if(dropAsItems){
+							checkBlock.harvestBlock(world, player, immutablePos, checkState, world.getTileEntity(immutablePos), tool);
+						}
+						EntityFallingBlock leafEntity = new EntityFallingBlock(world, immutablePos.getX() + 0.5, immutablePos.getY(), immutablePos.getZ() + 0.5, checkState);
+						leafEntity.shouldDropItem = false;
+						leafEntity.motionX = (rand.nextDouble() - 0.5) * 0.4;
+						leafEntity.motionY = 0;
+						leafEntity.motionZ = (rand.nextDouble() - 0.5) * 0.4;
+						world.spawnEntity(leafEntity);
+						world.setBlockToAir(immutablePos);
+					}
+				}
+			}
+		}
 	}
 }
