@@ -1,14 +1,31 @@
-*.zip
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
 *.iml
-
-.gradle
 .idea
-build
-eclipse
-/logs
-/run
-/run-client
-/run-server
 
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+
+# project-specific
+*.zip
 version.properties
 secrets.properties
+/run-client
+/run-server
+/logs
+/archive
